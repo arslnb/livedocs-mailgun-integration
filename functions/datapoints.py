@@ -1,38 +1,35 @@
-import google.oauth2.credentials
-import google_auth_oauthlib.flow as fl
 from config import config as cfg
-from connect import get_v4_service as gs
 from datetime import datetime
 from datetime import date
 from datetime import timedelta
-from apiclient.errors import HttpError
 import json
+import requests
 
 
-def get_bouncerate(args):
+def get_stats(args):
     try:
-        service = gs(args['service_auth'])
-        view_id = args['view']
+        domain_name = args['service_auth']['domain_name']
+        api_key = args['service_auth']['api_key']
 
-        today = datetime.today().strftime('%Y-%m-%d')
-        _yd = date.today() - timedelta(days=1)
-        yesterday = _yd.strftime('%Y-%m-%d')
+        request_url = "https://api.mailgun.net/v3/%s/stats/total" % domain_name
+        event = [args['datapoint']]
 
-        report = service.reports().batchGet(
-            body={
-                'reportRequests': [
-                    {
-                        'viewId': view_id,
-                        'dateRanges': [{'startDate': yesterday, 'endDate': today}],
-                        'metrics': [{'expression': 'ga:bounceRate'}]
-                    }]
-            }
-        ).execute()
+        response = requests.get(request_url, auth=("api", api_key),
+                                params={
+            "event": event,
+            "duration": "1m"
+        })
+        if str(response.status_code) != "200":
+            message = json.loads(response._content)['message']
+            return {'status': 'failure', 'error': message}
+        returned = json.loads(response._content)
+        if args['datapoint'] == "failed":
+            first_value = returned['stats'][0][event[0]]['permanent']['total']
+        else:
+            first_value = returned['stats'][0][event[0]]['total']
 
-        first_value = report['reports'][0]['data']['totals'][0]['values'][0]
         return {'status': 'success', 'data': {
-            'returned_val': first_value
+            'returned_val': str(first_value)
         }}
     except Exception as error:
-        message = json.loads(error.content)['error']['message']
-        return {'status': 'failure', 'error': message}
+        return {'status': 'failure', 'error': 'unexpected error'}

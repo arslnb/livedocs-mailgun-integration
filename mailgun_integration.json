@@ -12,7 +12,8 @@
     "display_name": "Arsalan Bashir",
     "photo_url": "https://ui-avatars.com/api/?name=Arsalan+Bashir"
   },
-  "basic_keys": {
+  "basic_keys": false,
+  "auth_keys": {
     "api_key": {
       "key_id": "api_key",
       "title": "API Key",
@@ -42,7 +43,7 @@
       "title": "Accepted",
       "descriptions": "Mailgun accepted the request to send/forward the email and the message has been placed in queue",
       "requires_key": false,
-      "api_name": "ga:users",
+      "api_name": "mg:accepted",
       "dispatch_keyword": "GET_ACCEPTED"
     },
     "delivered": {
@@ -50,56 +51,56 @@
       "title": "Delivered",
       "descriptions": "Mailgun sent the email and it was accepted by the recipient email server",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:delivered",
+      "dispatch_keyword": "GET_DELIVERED"
     },
     "failed": {
       "key_id": "failed",
       "title": "Failed",
       "descriptions": "Mailgun could not deliver the email to the recipient email server",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:failed",
+      "dispatch_keyword": "GET_FAILED"
     },
     "opened": {
       "key_id": "opened",
       "title": "Opened",
       "descriptions": "The email recipient opened the email and enabled image viewing",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:opened",
+      "dispatch_keyword": "GET_OPENED"
     },
     "clicked": {
       "key_id": "clicked",
       "title": "Clicked",
       "descriptions": "The email recipient clicked on a link in the email",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:clicked",
+      "dispatch_keyword": "GET_CLICKED"
     },
     "unsubscribed": {
       "key_id": "unsubscribed",
       "title": "Unsubscribed",
       "descriptions": "The email recipient clicked on the unsubscribe link",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:unsubscribed",
+      "dispatch_keyword": "GET_UNSUBSCRIBED"
     },
     "complained": {
       "key_id": "complained",
       "title": "Complained",
       "descriptions": "The email recipient clicked on the spam complaint button within their email client",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:complained",
+      "dispatch_keyword": "GET_COMPLAINED"
     },
     "stored": {
       "key_id": "stored",
       "title": "Stored",
       "descriptions": "Mailgun has stored an incoming message",
       "requires_key": false,
-      "api_name": "ga:users",
-      "dispatch_keyword": "GET_ACCEPTED"
+      "api_name": "mg:stored",
+      "dispatch_keyword": "GET_STORED"
     }
   }
 }
