@@ -1,4 +1,3 @@
-from config import config as cfg
 from datetime import datetime
 from datetime import date
 from datetime import timedelta
